@@ -1309,13 +1309,16 @@
 
 /* Basic */
 
+#header {
+	background-image: url("../../images/WB.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	height: 100vh;
+}
+
 	body {
 		background-color: #141414;
-		background-image: url("../../images/WB.jpg");
-		background-repeat: no-repeat;
-		background-size: cover;
-		background-position: center;
-		height: 100vh;
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 18pt;
 		line-height: 1.75em;
