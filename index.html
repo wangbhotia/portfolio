@@ -47,8 +47,11 @@
             align-items: center;
             justify-content: center;
         }
+        .wrapper {
+            padding: 20px;
+        }
         .initial {
-            font-size: 100px;
+            margin-bottom: 20px;
         }
         .name {
             font-size: 30px;
@@ -70,16 +73,24 @@
         .icons > a > span.label {
             display: none;
         }
+        @media (max-width: 768px) {
+            section > .container {
+                width: 90%;
+            }
+        }
         @media (max-width: 576px) {
             section > .container {
                 width: 90%;
+            }
+            .info {
+                font-size: 18px;
             }
         }
     </style>
     <section>
         <div class="container">
             <div class="wrapper">
-                <strong class="initial">WB</strong>
+                <img src="./WB.png" class="initial" height="200" alt="Wang Bhotia">
                 <div class="content">
                     <h1 class="name">Wang Bhotia</h1>
                     <p class="info">Full Stack Software Developer</p>
