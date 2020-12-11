@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compound Interest Calculator</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="container">
+    <h5 class="my-4">Compound Interest Calculator</h5>
+    <section class="mb-5">
+      <div
+        class="card"
+        style="
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
+            0 3px 6px rgba(0, 0, 0, 0.23);
+        "
+      >
+        <div class="card-body">
+          <form class="row g-3" onsubmit="calculateData(event)">
+            <div class="col-md-3">
+              <label for="age" class="form-label text-capitalize"
+                >Current Age</label
+              >
+              <input type="number" class="form-control" id="age" />
+            </div>
+            <div class="col-md-3">
+              <label for="retiringAge" class="form-label text-capitalize"
+                >Retiring Age</label
+              >
+              <input type="number" class="form-control" id="retiringAge" />
+            </div>
+            <div class="col-md-3">
+              <label for="annualDiposit" class="form-label text-capitalize"
+                >Annual Deposit</label
+              >
+              <input type="number" class="form-control" id="annualDiposit" />
+            </div>
+            <div class="col-md-3">
+              <label for="annualInterest" class="form-label text-capitalize"
+                >Annual Interest</label
+              >
+              <input
+                type="number"
+                step="0.01"
+                class="form-control"
+                id="annualInterest"
+              />
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary text-uppercase">
+                Calculate
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <section id="result_section" class="mb-4"></section>
+  </body>
+
+  <script>
+    function createTable(data) {
+      const section = document.getElementById("result_section");
+      const table = document.createElement("TABLE");
+      const tableBody = document.createElement("TBODY");
+
+      table.className = "table table-bordered table-striped";
+      table.appendChild(tableBody);
+
+      const heading = new Array();
+      heading[0] = "Age";
+      heading[1] = "Annual Deposit";
+      heading[2] = "Annual Interest";
+      heading[3] = "Total Amount";
+
+      const tr = document.createElement("TR");
+      tableBody.appendChild(tr);
+      for (let i = 0; i < heading.length; i++) {
+        let th = document.createElement("TH");
+        th.appendChild(document.createTextNode(heading[i]));
+        tr.appendChild(th);
+      }
+
+      for (let i = 0; i < data.length; i++) {
+        let tr = document.createElement("TR");
+        for (const [key, value] of Object.entries(data[i])) {
+          let td = document.createElement("TD");
+          td.appendChild(document.createTextNode(value));
+          tr.appendChild(td);
+        }
+        tableBody.appendChild(tr);
+      }
+
+      if (section.hasChildNodes()) {
+        section.removeChild(section.childNodes[0]);
+      }
+      section.appendChild(table);
+    }
+
+    function calculateData(event) {
+      event.preventDefault();
+
+      const interestEarned = Number(
+        document.getElementById("annualInterest").value
+      );
+      const annualDiposit = Number(
+        document.getElementById("annualDiposit").value
+      );
+      const retiringAge = Number(document.getElementById("retiringAge").value);
+      let currentAge = Number(document.getElementById("age").value);
+
+      const annualInterest = 1 + interestEarned / 100;
+      let totalDiposited = 0;
+      let totalContribution = 0;
+      let totalAmount = 0;
+      let result = [];
+
+      while (currentAge <= retiringAge) {
+        totalAmount = Number(
+          (totalAmount + annualDiposit) * annualInterest
+        ).toFixed(2);
+        totalDiposited = totalDiposited + annualDiposit;
+
+        result.push({
+          age: currentAge,
+          diposit: `$${totalDiposited}`,
+          interest: annualInterest,
+          total: `$${totalAmount}`,
+        });
+        currentAge++;
+      }
+
+      createTable(result);
+    }
+  </script>
+</html>
